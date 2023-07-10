@@ -1,0 +1,30 @@
+.chat-window {
+    position: fixed;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 25%;
+    background-color: #fafafa; /* Coloca aquí el color que prefieras */
+    overflow-y: auto;
+    padding: 15px;
+    box-sizing: border-box;
+}
+
+.chat-window .loading-message {
+    text-align: center;
+}
+
+.user-message {
+    background-color: #dcf8c6; /* Cambia esto por los colores que prefieras para los mensajes del usuario */
+    margin: 5px;
+    padding: 10px;
+    border-radius: 5px;
+    text-align: right;
+}
+
+.bot-message {
+    background-color: #f0f0f0; /* Cambia esto por los colores que prefieras para los mensajes del bot */
+    margin: 5px;
+    padding: 10px;
+    border-radius: 5px;
+}
