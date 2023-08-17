@@ -1,20 +1,27 @@
-import React, { useState } from 'react';
-import './App.css';
-import ChatWindow from './components/ChatWindow/ChatWindow';
-import ResponseWindow from './components/ResponseWindow/ResponseWindow';
+import React from 'react';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+
+import { ChatProvider} from './app/contexts/ChatContext'
+import { GameProvider } from './app/contexts/GameContext';
+import HomePage from './app/pages/HomePage';
+import GamePage from './app/pages/GamePage';
+import './App.css'; // Asumiendo que tienes estilos globales en App.css
 
 function App() {
-  const [responses, setResponses] = useState([]);
-
-  const handleResponse = (response) => {
-    setResponses([...responses, response]);
-  };
-
   return (
-    <div className="App">
-      <ChatWindow onResponse={handleResponse} />
-      <ResponseWindow responses={responses} />
-    </div>
+    <ChatProvider>
+      <GameProvider>
+        <Router>
+          <div className="App">
+          <Routes>
+            <Route path="/" element={<HomePage />} />
+            <Route path="/game" element={<GamePage />} />
+            {/* Puedes agregar más rutas según sea necesario */}
+          </Routes>
+          </div>
+        </Router>
+      </GameProvider>
+    </ChatProvider>
   );
 }
 
