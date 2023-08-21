@@ -1,0 +1,28 @@
+.suma-llevando {
+    font-family: 'Arial', sans-serif;
+    font-size: 24px;
+}
+
+.calculation {
+    display: flex;
+    flex-direction: row-reverse;
+    align-items: center;
+}
+
+.column {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0 10px;
+}
+
+.digit {
+    margin: 5px 0;
+    transition: all 0.5s ease-in-out;
+}
+
+.result {
+    margin-top: 20px;
+    font-weight: bold;
+    border-top: 2px solid black;
+}

@@ -5,6 +5,7 @@ class ChatGPTAdapter extends ChatAdapter {
     try {
       const response = await fetch('http://localhost:5000/students/1234/solve', {
         method: 'POST',
+        credentials: 'include',
         headers: {
           'Content-Type': 'application/json',
         },

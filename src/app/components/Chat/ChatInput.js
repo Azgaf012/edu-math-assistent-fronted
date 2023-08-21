@@ -1,12 +1,16 @@
 import React, { useState } from 'react';
 import Button from '../common/Button';
+import { useChat } from '../../contexts/ChatContext';
 
 const ChatInput = ({ onSubmit }) => {
   const [message, setMessage] = useState('');
+  const { addMessage } = useChat();  // Utiliza el hook
 
   const handleSubmit = () => {
-    onSubmit(message);
-    setMessage('');  // Clear the input after submitting.
+    if (message.trim()) {  // Evita enviar mensajes vacíos
+      addMessage(message, 'user');  // Añade el mensaje como un mensaje del usuario
+      setMessage('');  // Limpia el input después de enviar.
+    }
   };
 
   return (

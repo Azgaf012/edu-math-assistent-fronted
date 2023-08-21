@@ -1,0 +1,29 @@
+.chat-window {
+    background-color: #f0f8ff;  /* Color de fondo claro */
+    padding: 20px;
+    border-radius: 15px;
+    max-width: 100%;
+    margin: 0 auto;
+  }
+  
+  .message {
+    padding: 10px 15px;
+    margin: 10px 0;
+    border-radius: 20px;
+    max-width: 70%;
+  }
+  
+  .message.user {
+    background-color: #FFD700;  /* Color de fondo dorado para el usuario */
+    align-self: flex-start;
+  }
+  
+  .message.assistant {
+    background-color: #87CEEB;  /* Color de fondo azul cielo para el asistente */
+    align-self: flex-end;
+  }
+  
+  .message-content {
+    font-family: 'Comic Sans MS', sans-serif;  /* Una fuente amigable */
+  }
+  
