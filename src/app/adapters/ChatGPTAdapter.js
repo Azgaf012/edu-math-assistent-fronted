@@ -9,7 +9,7 @@ class ChatGPTAdapter extends ChatAdapter {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ query: messageContent }),
+        body: JSON.stringify({ question: messageContent }),
       });
 
       if (!response.ok) {
@@ -17,7 +17,8 @@ class ChatGPTAdapter extends ChatAdapter {
       }
 
       const data = await response.json();
-      return data.answer;  // assuming the API returns an object with an 'answer' field
+
+      return data.response; 
     } catch (error) {
       console.error('There was a problem fetching the chat response:', error);
       return 'Lo siento, hubo un error al procesar tu solicitud.';

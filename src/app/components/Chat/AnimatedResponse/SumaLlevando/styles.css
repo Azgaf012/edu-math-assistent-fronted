@@ -1,28 +1,39 @@
-.suma-llevando {
-    font-family: 'Arial', sans-serif;
+.animated-sum {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr) auto;  /* Cuatro columnas para dígitos y una para el operador */
+    gap: 5px;
     font-size: 24px;
+    width: 100%;
 }
 
-.calculation {
-    display: flex;
-    flex-direction: row-reverse;
-    align-items: center;
+.carry {
+    justify-self: center;
+    font-weight: bold;
+    color: blue;
 }
 
-.column {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin: 0 10px;
+.carry-digit {
+    justify-self: center;
+    opacity: 0;  /* Por defecto, lo hacemos invisible. La animación cambiará esto. */
 }
 
-.digit {
-    margin: 5px 0;
-    transition: all 0.5s ease-in-out;
+.operator {
+    grid-column: 5;  /* Quinta columna */
+    grid-row: 2;  /* Segunda fila */
+    align-self: center;
+}
+
+.number {
+    justify-self: center;
 }
 
 .result {
-    margin-top: 20px;
+    justify-self: center;
     font-weight: bold;
-    border-top: 2px solid black;
+    color: green;
+}
+
+.empty {
+    border: none !important;
+    box-shadow: none !important;
 }

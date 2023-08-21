@@ -9,8 +9,9 @@ const ChatWindow = ({ messages = [] }) => {
     <div className="chat-window">
       
       {messages.map((message, index) => {
-        if (message.type === 'sumaLlevando') {
-          return <SumaLlevando key={index} content={message.content} data={message.data} />;
+        if (message.content?.response?.type === 'sumaLlevando') {
+          console.log(message)
+          return <SumaLlevando key={index} content={message.content.response.content} data={message.content.response.data} />;
         }
         return <div key={index}>{message.content}</div>;
       })}
