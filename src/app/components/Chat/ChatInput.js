@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import Button from '../common/Button';
 import { useChat } from '../../contexts/ChatContext';
+import './ChatInput.css'
 
 const ChatInput = ({ onSubmit }) => {
   const [message, setMessage] = useState('');
@@ -19,9 +20,9 @@ const ChatInput = ({ onSubmit }) => {
         type="text"
         value={message}
         onChange={(e) => setMessage(e.target.value)}
-        placeholder="Type your message..."
+        placeholder="Escribe tu consulta aqui..."
       />
-      <Button label="Send" onClick={handleSubmit} />
+      <Button label="Enviar" onClick={handleSubmit} />
     </div>
   );
 };

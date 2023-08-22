@@ -37,3 +37,30 @@
     border: none !important;
     box-shadow: none !important;
 }
+
+.animated-sum-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.explanation-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+button {
+    padding: 10px 20px;
+    font-size: 18px;
+    background-color: #87CEEB;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    background-color: #1E90FF;
+}

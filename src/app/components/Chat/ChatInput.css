@@ -1,0 +1,32 @@
+/* ChatInput.css */
+.chat-input {
+  position: fixed;
+  bottom: 0;
+  left: 0; /* Asegúrate de que comience desde el lado izquierdo de la pantalla */
+  width: 100%;
+  background-color: #FFF3E0;
+  padding: 10px 20px;
+  border-top: 2px solid #FF9800;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-sizing: border-box; /* Esto hará que el padding y el border se incluyan en el ancho total */
+}
+
+input {
+  font-size: 20px;
+  padding: 5px 10px;
+  border: 2px solid #FF9800;
+  border-radius: 15px;
+  width: 75%;
+  box-sizing: border-box; /* Esto hará que el padding y el border se incluyan en el ancho total */
+}
+
+button {
+  font-size: 20px;
+  padding: 5px 15px;
+  background-color: #FFC107;
+  border: none;
+  border-radius: 15px;
+  box-sizing: border-box; /* Esto hará que el padding y el border se incluyan en el ancho total */
+}

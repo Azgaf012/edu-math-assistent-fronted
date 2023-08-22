@@ -6,8 +6,6 @@ import ChatInput from '../components/Chat/ChatInput';
 const HomePage = () => {
   return (
     <div className="home-page">
-      <h1>Bienvenido al asistente virtual de matemáticas</h1>
-      <p>¡Aprende y diviértete con nuestra IA!</p>
       <ChatProvider>
         <ChatBox />
       </ChatProvider>

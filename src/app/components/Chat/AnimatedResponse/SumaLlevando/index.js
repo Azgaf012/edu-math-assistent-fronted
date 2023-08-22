@@ -5,6 +5,7 @@ import './styles.css';
 const SumaLlevando = ({ content, data }) => {
     const [animationStep, setAnimationStep] = useState(0);
     const [carry, setCarry] = useState([]);
+    const [showExample, setShowExample] = useState(false);
   
     useEffect(() => {
       if (animationStep < data.numbers[0].toString().length) {
@@ -34,6 +35,14 @@ const SumaLlevando = ({ content, data }) => {
     });
   
     return (
+      <div className="animated-sum-container">
+        <div className="explanation-section">
+              <div 
+                  className="explanation-text"
+                  dangerouslySetInnerHTML={{ __html: content }}
+              />
+              <button onClick={() => setShowExample(true)}>Ver Ejemplo</button>
+          </div>
         <div className="animated-sum">
             {Array(3 - data.carry_digits.length).fill().map((_, index) => <div key={'empty3-' + index} className="empty"></div>)} 
             {data.carry_digits.map((digit, index) => (
@@ -62,6 +71,7 @@ const SumaLlevando = ({ content, data }) => {
             ))}
             
         </div>
+      </div>
     );
     
    
