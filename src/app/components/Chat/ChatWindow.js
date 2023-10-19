@@ -49,7 +49,7 @@ const ChatWindow = ({ messages = [] }) => {
           
           if (message.content?.response?.type === 'sumaLlevando') {
             return (
-              <Explicacion key={index} content={message.content.response.content} data={message.content.response.data} >
+              <Explicacion key={index} content={message.content.response.content} >
                 <SumProcess  content={message.content.response.content} data={message.content.response.data} />
               </Explicacion>
             );
@@ -57,7 +57,7 @@ const ChatWindow = ({ messages = [] }) => {
 
           if (message.content?.response?.type === 'restaPrestando') {
             return (
-              <Explicacion key={index} content={message.content.response.content} data={message.content.response.data}>
+              <Explicacion key={index} content={message.content.response.content}>
                 <SubtractionProcess content={message.content.response.content} data={message.content.response.data} />
               </Explicacion>
             );
