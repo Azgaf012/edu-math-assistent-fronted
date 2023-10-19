@@ -1,29 +1,43 @@
 import React, { useState } from 'react';
-import Button from '../common/Button';
+import { Button, TextField, Box } from '@mui/material';
 import { useChat } from '../../contexts/ChatContext';
-import './ChatInput.css'
 
-const ChatInput = ({ onSubmit }) => {
+const ChatInput = () => {
   const [message, setMessage] = useState('');
-  const { addMessage } = useChat();  // Utiliza el hook
-
+  const { addMessage } = useChat();
+  
   const handleSubmit = () => {
-    if (message.trim()) {  // Evita enviar mensajes vacíos
-      addMessage(message, 'user');  // Añade el mensaje como un mensaje del usuario
-      setMessage('');  // Limpia el input después de enviar.
+    if (message.trim()) {  
+      addMessage(message, 'user');  
+      setMessage('');  
     }
   };
 
   return (
-    <div className="chat-input">
-      <input
-        type="text"
+    <Box 
+      display="flex" 
+      justifyContent="space-between" 
+      alignItems="center" 
+      p={2} 
+      bgcolor="#FFFFFF"
+      position="fixed"
+      bottom={0}
+      left={0}
+      right={0} 
+    >
+      <TextField
+        fullWidth
+        variant="outlined"
         value={message}
+        bgcolor="#FFF3E0"
         onChange={(e) => setMessage(e.target.value)}
         placeholder="Escribe tu consulta aqui..."
+        onKeyDown={(e) => e.key === 'Enter' && handleSubmit()}
       />
-      <Button label="Enviar" onClick={handleSubmit} />
-    </div>
+      <Button variant="contained" color="primary" onClick={handleSubmit} style={{marginLeft: '1rem'}}>
+        Enviar
+      </Button>
+    </Box>
   );
 };
 

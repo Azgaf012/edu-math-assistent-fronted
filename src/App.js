@@ -13,7 +13,6 @@ function App() {
           <div className="App">
           <Routes>
             <Route path="/" element={<HomePage />} />
-            {/* Puedes agregar más rutas según sea necesario */}
           </Routes>
           </div>
         </Router>
