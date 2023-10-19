@@ -20,12 +20,13 @@ const ChatWindow = ({ messages = [] }) => {
       display="flex"
       width="100%"
 
-      height="100vh"
+      height="90vh"
       p={0}
       position="relative"
     >
       <Box
         flex={selectedTopic ? 1 : 4}  // Ajusta el flex basado en si hay un tema seleccionado
+        width="100%"
         bgcolor="#FFEBEE"
         p={2}
         overflow="auto"

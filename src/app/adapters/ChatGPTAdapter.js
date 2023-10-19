@@ -3,7 +3,7 @@ import ChatAdapter from "../../core/interfaces/ChatAdapter";
 class ChatGPTAdapter extends ChatAdapter {
   async fetchResponse(messageContent) {
     try {
-      const response = await fetch('http://localhost:5000/students/1234/solve', {
+      const response = await fetch('https://asistente-backend.df.r.appspot.com/students/1234/solve', {
         method: 'POST',
         credentials: 'include',
         headers: {
