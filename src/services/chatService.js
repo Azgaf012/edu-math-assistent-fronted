@@ -3,7 +3,7 @@ import axios from 'axios';
 class ChatService {
     async sendMessage(question, responseType = 'explicacion') {
         // Cambie esto por la URL de su API
-        const url = 'http://localhost:5000/students/1234/solve';
+        const url = 'https://asistente-backend.df.r.appspot.com/students/1234/solve';
 
         try {
             const response = await axios.post(url, { question, response_type: responseType });
