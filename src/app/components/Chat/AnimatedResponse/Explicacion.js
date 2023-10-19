@@ -1,5 +1,5 @@
 import React from 'react';
-import { Typography, Box, useTheme, useMediaQuery, List, ListItem, Divider } from '@mui/material';
+import { Typography, Box, useTheme} from '@mui/material';
 
 const Explicacion = ({ content, children }) => {
     const contentJson = JSON.parse(content);
