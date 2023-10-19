@@ -8,4 +8,5 @@ steps:
 timeout: '1600s'
 options:
   defaultLogsBucketBehavior: 'REGIONAL_USER_OWNED_BUCKET'
+  logsBucket: "gs://asistente-math"
 
