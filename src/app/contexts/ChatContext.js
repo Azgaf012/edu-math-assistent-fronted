@@ -14,7 +14,6 @@ export const ChatProvider = ({ children }) => {
   
     if (sender === 'user') {
       setIsLoading(true); 
-      
       const responseContent = await chatAdapter.fetchResponse(content);
       setIsLoading(false);
 
@@ -25,8 +24,24 @@ export const ChatProvider = ({ children }) => {
     }
   };
 
+  const addMessageGeneric = async(content, sender) => {
+    setMessages([]);
+    const newMessage = { content, sender };
+  
+    if (sender === 'user') {
+      setIsLoading(true); 
+      const responseContent = await chatAdapter.fetchResponseGeneric(content);
+      setIsLoading(false);
+
+      const responseMessage = { content: responseContent, sender: 'assistant' };
+      setMessages(prevMessages => [...prevMessages, newMessage, responseMessage]);
+    } else {
+      setMessages(prevMessages => [...prevMessages, newMessage]);
+    }
+  };
+
   return (
-    <ChatContext.Provider value={{ messages, addMessage, isLoading }}>
+    <ChatContext.Provider value={{ messages, addMessageGeneric, addMessage, isLoading }}>
       {children}
     </ChatContext.Provider>
   );

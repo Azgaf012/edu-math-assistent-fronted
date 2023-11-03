@@ -6,6 +6,7 @@ import SumProcess from './AnimatedResponse/SumaLlevando';
 import { useChat } from '../../contexts/ChatContext';
 import LoadingMessage from '../common/progress';
 import TopicSelection from './TopicSelection';
+import parse from 'html-react-parser';
 
 const ChatWindow = ({ messages = [] }) => {
   const { isLoading } = useChat();
@@ -68,7 +69,7 @@ const ChatWindow = ({ messages = [] }) => {
           return (
             <Box key={index} display="flex" justifyContent={alignment} marginBottom={2} >
               <Paper elevation={3} style={{ padding: '1rem', maxWidth: '70%' }}>
-                <Typography variant="body1">{message.content}</Typography>
+                <Typography variant="body1"> {parse(message.content)}</Typography>
               </Paper>
             </Box>
           );
