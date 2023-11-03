@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
-import { Paper, Box, Typography } from '@mui/material';
+import React, { useState, useRef, useEffect } from 'react';
+import { Paper, Box, Typography, IconButton } from '@mui/material';
+import VolumeUp from '@mui/icons-material/VolumeUp';
 import SubtractionProcess from './AnimatedResponse/RetaPrestando';
 import Explicacion from './AnimatedResponse/Explicacion';
 import SumProcess from './AnimatedResponse/SumaLlevando';
@@ -11,10 +12,21 @@ import parse from 'html-react-parser';
 const ChatWindow = ({ messages = [] }) => {
   const { isLoading } = useChat();
   const [selectedTopic, setSelectedTopic] = useState(null);
-  console.log(messages);
+  const speakingRef = useRef(false);
   const handleTopicSelection = (topic) => {
     setSelectedTopic(topic);
   };
+
+  const speak = (text) => {
+  if (speakingRef.current) {
+    window.speechSynthesis.cancel();  // Esto detendrá cualquier habla en curso
+    speakingRef.current = false;  // Restablecer la referencia
+  } else {
+    const utterance = new SpeechSynthesisUtterance(text);
+    window.speechSynthesis.speak(utterance);
+    speakingRef.current = true;  // Indicar que la síntesis de voz está en curso
+  }
+};
 
   return (
     <Box
@@ -38,20 +50,20 @@ const ChatWindow = ({ messages = [] }) => {
       </Box>
 
       <Box
-        flex={selectedTopic ? 3 : 0}  
+        flex={selectedTopic ? 3 : 0}
         bgcolor="#E0F2F1"
         p={4}
         overflow="auto"
-        position="relative"  
+        position="relative"
         transition="left 0.5s ease-in-out"
-        
+
       >
         {messages.map((message, index) => {
-          
+
           if (message.content?.response?.type === 'sumaLlevando') {
             return (
               <Explicacion key={index} content={message.content.response.content} >
-                <SumProcess  content={message.content.response.content} data={message.content.response.data} />
+                <SumProcess content={message.content.response.content} data={message.content.response.data} />
               </Explicacion>
             );
           }
@@ -69,8 +81,11 @@ const ChatWindow = ({ messages = [] }) => {
           return (
             <Box key={index} display="flex" justifyContent={alignment} marginBottom={2} >
               <Paper elevation={3} style={{ padding: '1rem', maxWidth: '70%' }}>
-                <Typography variant="body1"> {parse(message.content)}</Typography>
+                <Typography variant="body1">{parse(message.content)}</Typography>
               </Paper>
+              <IconButton onClick={() => speak(message.content)}>
+                <VolumeUp />
+              </IconButton>
             </Box>
           );
         })}
