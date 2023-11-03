@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef } from 'react';
 import { Paper, Box, Typography, IconButton } from '@mui/material';
 import VolumeUp from '@mui/icons-material/VolumeUp';
 import SubtractionProcess from './AnimatedResponse/RetaPrestando';
