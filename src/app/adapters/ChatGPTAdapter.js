@@ -28,7 +28,7 @@ class ChatGPTAdapter extends ChatAdapter {
 
   async fetchResponseGeneric(messageContent) {
     try {
-      const response = await fetch('http://localhost:5000/questions', {
+      const response = await fetch('https://asistente-backend.df.r.appspot.com/questions', {
         method: 'POST',
         credentials: 'include',
         headers: {
