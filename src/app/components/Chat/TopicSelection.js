@@ -1,18 +1,21 @@
 import React from 'react';
-import { Button, Box, Typography, useMediaQuery, useTheme } from '@mui/material';
+import { Button, Box, Typography, useMediaQuery } from '@mui/material';
 import AddBoxIcon from '@mui/icons-material/AddBox';
 import IndeterminateCheckBoxIcon from '@mui/icons-material/IndeterminateCheckBox';
 import { useChat } from '../../contexts/ChatContext';
 
-const TopicSelection = ({ onTopicSelect }) => {
-  const theme = useTheme();
-  const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
+const TopicSelection = ({ onTopicSelect, isTopicSelected  }) => {
+  const isSmallScreen = useMediaQuery(`(max-width:900px)`); // Usar directamente la query con px
+  
   const { addMessage } = useChat();
 
   const handleButtonClick = (topic) => {
-    addMessage(topic, 'user');  // Envía el mensaje al backend cuando se hace clic en un botón
-    onTopicSelect(topic);  // Esta línea ya estaba aquí
+    addMessage(topic, 'user');
+    onTopicSelect(topic);
   };
+
+  const flexDirection = isSmallScreen || isTopicSelected ? 'column' : 'row';
+  const fullWidthButton = isSmallScreen || isTopicSelected;
 
   return (
     <Box
@@ -34,10 +37,12 @@ const TopicSelection = ({ onTopicSelect }) => {
       </Typography>
       <Box
         display="flex"
-        flexDirection={isSmallScreen ? 'column' : 'row'}
-        justifyContent="space-around"
+        flexDirection={flexDirection}
+        justifyContent="center"
+        alignItems="stretch"
         width="100%"
         mt={2}
+        gap={2}
       >
         <Button
           variant="contained"
@@ -45,6 +50,7 @@ const TopicSelection = ({ onTopicSelect }) => {
           size="large"
           startIcon={<AddBoxIcon />}
           onClick={() => handleButtonClick('Sumas Llevando')}
+          fullWidth={fullWidthButton}
         >
           Sumas Llevando
         </Button>
@@ -54,6 +60,7 @@ const TopicSelection = ({ onTopicSelect }) => {
           size="large"
           startIcon={<IndeterminateCheckBoxIcon />}
           onClick={() => handleButtonClick('Restas Prestando')}
+          fullWidth={fullWidthButton}  
         >
           Restas Prestando
         </Button>
@@ -64,6 +71,7 @@ const TopicSelection = ({ onTopicSelect }) => {
           size="large"
           startIcon={<IndeterminateCheckBoxIcon />}
           onClick={() => handleButtonClick('Comparacion de numeros')}
+          fullWidth={fullWidthButton} 
         >
           Comparaci&oacute;n de n&uacute;meros
         </Button>
@@ -74,6 +82,7 @@ const TopicSelection = ({ onTopicSelect }) => {
           size="large"
           startIcon={<IndeterminateCheckBoxIcon />}
           onClick={() => handleButtonClick('Posterior y anterior')}
+          fullWidth={fullWidthButton} 
         >
           Anterior y posterior
         </Button>

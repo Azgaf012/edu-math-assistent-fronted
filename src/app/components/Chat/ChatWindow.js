@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react';
-import { Paper, Box, Typography, IconButton } from '@mui/material';
+import { Paper, Box, Typography, IconButton, useMediaQuery } from '@mui/material';
 import VolumeUp from '@mui/icons-material/VolumeUp';
 import SubtractionProcess from './AnimatedResponse/RetaPrestando';
 import Explicacion from './AnimatedResponse/Explicacion';
@@ -12,43 +12,47 @@ import NumberComparisonProcess from './AnimatedResponse/ComparacionNumeros';
 import NumberStepsVisualization from './AnimatedResponse/AnteriorPosterior';
 
 const ChatWindow = ({ messages = [] }) => {
+
+  const isSmallScreen = useMediaQuery(`(max-width:1500px)`);
   const { isLoading } = useChat();
   const [selectedTopic, setSelectedTopic] = useState(null);
   const speakingRef = useRef(false);
+
   const handleTopicSelection = (topic) => {
     setSelectedTopic(topic);
   };
 
   const speak = (text) => {
-  if (speakingRef.current) {
-    window.speechSynthesis.cancel();  // Esto detendrá cualquier habla en curso
-    speakingRef.current = false;  // Restablecer la referencia
-  } else {
-    const utterance = new SpeechSynthesisUtterance(text);
-    window.speechSynthesis.speak(utterance);
-    speakingRef.current = true;  // Indicar que la síntesis de voz está en curso
-  }
-};
+    if (speakingRef.current) {
+      window.speechSynthesis.cancel();  // Esto detendrá cualquier habla en curso
+      speakingRef.current = false;  // Restablecer la referencia
+    } else {
+      const utterance = new SpeechSynthesisUtterance(text);
+      window.speechSynthesis.speak(utterance);
+      speakingRef.current = true;  // Indicar que la síntesis de voz está en curso
+    }
+  };
 
   return (
     <Box
       display="flex"
+      flexDirection={isSmallScreen ? 'column' : 'row'} // Ajuste de dirección basado en el tamaño de pantalla
       width="100%"
-
       height="90vh"
       p={0}
       position="relative"
     >
       <Box
-        flex={selectedTopic ? 1 : 4}  // Ajusta el flex basado en si hay un tema seleccionado
-        width="100%"
+        flex={selectedTopic ? '1' : '4'} // Esto permite que el Box se ajuste según el contenido
+        width={isSmallScreen ? '100%' : '50%'} // Ajusta el ancho al 100% en pantallas pequeñas
         bgcolor="#FFEBEE"
         p={2}
         overflow="auto"
         position="relative"
         transition="flex 0.5s ease-in-out"
+        order={isSmallScreen && selectedTopic ? 2 : 1} // Ajuste del orden en pantallas pequeñas
       >
-        <TopicSelection onTopicSelect={handleTopicSelection} />
+        <TopicSelection onTopicSelect={handleTopicSelection} isTopicSelected={!!selectedTopic} />
       </Box>
 
       <Box
@@ -57,8 +61,9 @@ const ChatWindow = ({ messages = [] }) => {
         p={4}
         overflow="auto"
         position="relative"
-        transition="left 0.5s ease-in-out"
-
+        transition="flex 0.5s ease-in-out"
+        order={isSmallScreen ? 1 : 2} // Ajuste del orden para que el contenido se muestre primero en pantallas pequeñas
+        display={selectedTopic || isSmallScreen ? 'block' : 'none'} // Ocultar este Box si no hay un tema seleccionado en pantallas grandes
       >
         {messages.map((message, index) => {
 
