@@ -8,6 +8,8 @@ import { useChat } from '../../contexts/ChatContext';
 import LoadingMessage from '../common/progress';
 import TopicSelection from './TopicSelection';
 import parse from 'html-react-parser';
+import NumberComparisonProcess from './AnimatedResponse/ComparacionNumeros';
+import NumberStepsVisualization from './AnimatedResponse/AnteriorPosterior';
 
 const ChatWindow = ({ messages = [] }) => {
   const { isLoading } = useChat();
@@ -72,6 +74,22 @@ const ChatWindow = ({ messages = [] }) => {
             return (
               <Explicacion key={index} content={message.content.response.content}>
                 <SubtractionProcess content={message.content.response.content} data={message.content.response.data} />
+              </Explicacion>
+            );
+          }
+
+          if (message.content?.response?.type === 'comparacionNumeros') {
+            return (
+              <Explicacion key={index} content={message.content.response.content}>
+                <NumberComparisonProcess content={message.content.response.content} data={message.content.response.data} />
+              </Explicacion>
+            );
+          }
+
+          if (message.content?.response?.type === 'anteriorPosterior') {
+            return (
+              <Explicacion key={index} content={message.content.response.content}>
+                <NumberStepsVisualization content={message.content.response.content} data={message.content.response.data} />
               </Explicacion>
             );
           }

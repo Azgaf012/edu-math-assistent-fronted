@@ -57,6 +57,26 @@ const TopicSelection = ({ onTopicSelect }) => {
         >
           Restas Prestando
         </Button>
+
+        <Button
+          variant="contained"
+          color="secondary"
+          size="large"
+          startIcon={<IndeterminateCheckBoxIcon />}
+          onClick={() => handleButtonClick('Comparacion de numeros')}
+        >
+          Comparaci&oacute;n de n&uacute;meros
+        </Button>
+
+        <Button
+          variant="contained"
+          color="secondary"
+          size="large"
+          startIcon={<IndeterminateCheckBoxIcon />}
+          onClick={() => handleButtonClick('Posterior y anterior')}
+        >
+          Anterior y posterior
+        </Button>
       </Box>
     </Box>
   );
