@@ -1,11 +1,10 @@
 import React from 'react';
 import { Typography, Box } from '@mui/material';
 
-// Componente que representa la recta numérica completa
 const NumberLine = ({ min, max, children }) => {
-    // Ajustar el espaciado de las marcas en función del rango
+
     const range = max - min;
-    const step = range <= 20 ? 1 : 5; // Ajusta este valor según la necesidad
+    const step = range <= 20 ? 1 : 5;
   
     const marks = Array.from(
       { length: Math.floor(range / step) + 1 },
@@ -46,35 +45,33 @@ const NumberLine = ({ min, max, children }) => {
     );
   };
   
-  // Componente que representa un punto en la recta numérica
   const NumberPoint = ({ number, position }) => (
     <Box sx={{
       position: 'absolute',
       left: `${position}%`,
-      top: '-30px', // Mover el punto hacia arriba para evitar solapamientos con las marcas
+      top: '-30px',
       transform: 'translate(-50%, -50%)',
-      width: '50px', // Hacer el punto más grande
-      height: '50px', // Hacer el punto más grande
+      width: '50px', 
+      height: '50px', 
       borderRadius: '50%',
-      backgroundColor: 'skyblue', // Usar un color más llamativo
-      color: 'black', // Cambiar el color del texto para mejorar el contraste
+      backgroundColor: 'skyblue', 
+      color: 'black', 
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'center',
-      fontSize: '1rem', // Aumentar el tamaño del texto
-      boxShadow: '0px 3px 6px rgba(0,0,0,0.2)' // Añadir sombra para resaltar el punto
+      fontSize: '1rem',
+      boxShadow: '0px 3px 6px rgba(0,0,0,0.2)' 
     }}>
       {number}
     </Box>
   );
 
-// Componente para mostrar la comparación en la recta numérica
-const NumberComparisonOnLine = ({ number1, number2 }) => {
-  // Determinamos el rango de la recta numérica basado en los números proporcionados
-  const min = Math.min(number1, number2) - 10; // 10 unidades menos que el menor número para dar espacio
-  const max = Math.max(number1, number2) + 10; // 10 unidades más que el mayor número para dar espacio
 
-  // Calcular la posición de los números en la recta
+const NumberComparisonOnLine = ({ number1, number2 }) => {
+
+  const min = Math.min(number1, number2) - 10; 
+  const max = Math.max(number1, number2) + 10; 
+
   const position1 = ((number1 - min) / (max - min)) * 100;
   const position2 = ((number2 - min) / (max - min)) * 100;
 
@@ -91,15 +88,15 @@ const NumberComparisonOnLine = ({ number1, number2 }) => {
   );
 };
 
-// Componente principal que utiliza el componente de recta numérica
 const NumberComparisonProcess = ({ content, data }) => {
+  const { num1, num2 } = data;
   return (
-    <Box my={2} display="flex" flexDirection="column" alignItems="center" justifyContent="center">
+    <Box my={2} display="flex" flexDirection="column" alignItems="center" justifyContent="center" p={5}   >
       
-      {content.ejemplo.pasos.map((step, index) => (
+      {content.map((step, index) => (
         <Typography key={index}>{step}</Typography>
       ))}
-      <NumberComparisonOnLine number1={data.num1} number2={data.num2} />
+      <NumberComparisonOnLine number1={num1} number2={num2} />
      
     </Box>
   );

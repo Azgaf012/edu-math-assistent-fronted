@@ -1,20 +1,26 @@
 import { useState } from 'react';
 import ChatGPTAdapter from '../adapters/ChatGPTAdapter';
+import ResponseContent from '../../core/entities/ResponseContent';
 
 const useChatGPT = () => {
   const [messages, setMessages] = useState([]);
   const adapter = new ChatGPTAdapter();
 
   const sendMessage = async (content) => {
-    // Add the user's message to the state
+    
     setMessages((prevMessages) => [...prevMessages, { sender: 'user', content }]);
-
-    // Fetch response from ChatGPT using the adapter
-    const response = await adapter.fetchResponse(content);
-
-    // Add the assistant's response to the state
-    setMessages((prevMessages) => [...prevMessages, { sender: 'assistant', content: response }]);
+  
+    // Obtener la respuesta de ChatGPT
+    const apiResponse = await adapter.fetchResponse(content);
+  
+    // Aquí, asumimos que apiResponse contiene la información necesaria
+    // para crear un objeto ResponseContent
+    const responseContent = new ResponseContent(apiResponse.content, apiResponse.data, apiResponse.type);
+  
+    // Añadir la respuesta del asistente
+    setMessages((prevMessages) => [...prevMessages, { sender: 'assistant', content: responseContent }]);
   };
+  
 
   return {
     messages,

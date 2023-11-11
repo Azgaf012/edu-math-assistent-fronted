@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 
 import { ChatProvider} from './app/contexts/ChatContext'
 import HomePage from './app/pages/HomePage';
-import './App.css'; // Asumiendo que tienes estilos globales en App.css
+import './App.css';
 
 function App() {
   return (

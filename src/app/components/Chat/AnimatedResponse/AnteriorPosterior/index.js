@@ -43,24 +43,27 @@ const StepIncrement = ({ symbol, style }) => (
 
 // Componente principal que utiliza los escalones para mostrar los números anterior y posterior
 const NumberStepsVisualization = ({ content, data }) => {
+
+  const { previousNum, nextNum, num} = data;
+
   const stepStyle = (factor) => ({
     transform: `translateY(${factor * 20}px)`
   });
 
   return (
-    <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', my: 4 }}>
+    <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', my: 4, padding: '25px' }}>
       
-      {content.ejemplo.pasos.map((step, index) => (
+      {content.map((step, index) => (
         <Typography key={index} sx={{ mt: 1, mb: 1 }}>
           {step}
         </Typography>
       ))}
       <Box sx={{ display: 'flex', justifyContent: 'center', mt: 4 }}>
-        <NumberStep number={data.previous_num} label="Antes" style={stepStyle(1)} />
+        <NumberStep number={previousNum} label="Antes" style={stepStyle(1)} />
         <StepIncrement symbol="-1" style={stepStyle(0.5)} />
-        <NumberStep number={data.num} label="Actual" isHighlighted />
+        <NumberStep number={num} label="Actual" isHighlighted />
         <StepIncrement symbol="+1" style={stepStyle(-0.5)} />
-        <NumberStep number={data.next_num} label="Después" style={stepStyle(-1)} />
+        <NumberStep number={nextNum} label="Después" style={stepStyle(-1)} />
       </Box>      
     </Box>
   );

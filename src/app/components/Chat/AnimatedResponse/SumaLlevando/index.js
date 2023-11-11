@@ -88,7 +88,7 @@ const ResultDigits = ({ result }) => (
   </>
 );
 
-const AnimatedSum = ({ data}) => {
+const AnimatedSum = ({numbers, carry_digits, result}) => {
 
 
   return (
@@ -97,14 +97,14 @@ const AnimatedSum = ({ data}) => {
       <Typography variant="span" sx={{ gridColumn: "2", textAlign: "center" }}>D</Typography>
       <Typography variant="span" sx={{ gridColumn: "3", textAlign: "center" }}>U</Typography>
       <EmptySpace />  {/* Esto ocupará la 4ta columna */}
-      <CarryOverDigits carryOverDigits={data.carry_digits}/>
+      <CarryOverDigits carryOverDigits={carry_digits}/>
       <EmptySpace />
       <EmptySpace />
-      <AnimatedNumber number={data.numbers[0]} />
+      <AnimatedNumber number={numbers[0]} />
       <Typography variant="h5" component="span">+</Typography>
-      <AnimatedNumber number={data.numbers[1]} />
+      <AnimatedNumber number={numbers[1]} />
       <EmptySpace />
-      <ResultDigits result={data.result} f />
+      <ResultDigits result={result} f />
     </Box>
   );
 };
@@ -112,23 +112,22 @@ const AnimatedSum = ({ data}) => {
 const ProcessStep = ({ children }) => <ListItem>{children}</ListItem>;
 
 const SumProcess = ({ content, data }) => {
-  console.log(data);
+ 
+  const { numbers, carry_digits, result} = data;
   const [animationStep, setAnimationStep] = useState(0);
-  const contentJson = JSON.parse(content);
+  
   const theme = useTheme();
   const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
 
   useEffect(() => {
-    if (animationStep < Math.max(data.numbers[0].toString().length, data.numbers[1].toString().length)) {
+    if (animationStep < Math.max(numbers[0].toString().length, numbers[1].toString().length)) {
       const timer = setTimeout(() => {
         setAnimationStep(prev => prev + 1);
       }, 1000);
       
-      return () => clearTimeout(timer); // Limpiamos el timer para evitar efectos secundarios no deseados.
+      return () => clearTimeout(timer);
     }
-  }, [animationStep, data.numbers]);
-
-  
+  }, [animationStep, numbers]);
 
   return (
     <Box my={2} p={2} display="flex" flexDirection={isSmallScreen ? "column" : "row"} justifyContent="space-between"
@@ -136,17 +135,17 @@ const SumProcess = ({ content, data }) => {
     >
       <ProcessContainer>
         <List>
-          {contentJson.ejemplo.pasos.map((step, index) => (
+          {content.map((step, index) => (
             <React.Fragment key={index}>
               <ProcessStep>
                 <Typography>{step}</Typography>
               </ProcessStep>
-              {index !== contentJson.ejemplo.pasos.length - 1 && <Divider />}
+              {index !== content.length - 1 && <Divider />}
             </React.Fragment>
           ))}
         </List>
       </ProcessContainer>
-      <AnimatedSum data={data} animationStep={animationStep} />
+      <AnimatedSum numbers={numbers} carry_digits={carry_digits} result={result} animationStep={animationStep} />
     </Box>
   );
 };

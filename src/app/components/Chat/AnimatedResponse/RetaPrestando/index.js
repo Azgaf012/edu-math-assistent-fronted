@@ -88,28 +88,30 @@ const ResultDigits = ({ result, fadeInStyle }) => (
     </>
 );
 
-const AnimatedSubtraction = ({ data, fadeInStyle, highlightStyle, animationStep }) => (
+const AnimatedSubtraction = ({numbers, borrow_digits, result, fadeInStyle, highlightStyle, animationStep }) => (
     <Box sx={{ width: "80%", display: "grid", gridTemplateColumns: "repeat(3, 1fr) auto", gap: 2, fontSize: "15px", border: 1, borderColor: "#FF69B4", borderRadius: 1, p: 4 }}>
         <Typography variant="span" sx={{ gridColumn: "1", textAlign: "center" }}>C</Typography>
         <Typography variant="span" sx={{ gridColumn: "2", textAlign: "center" }}>D</Typography>
         <Typography variant="span" sx={{ gridColumn: "3", textAlign: "center" }}>U</Typography>
-        <EmptySpace />  {/* This will occupy the 4th column */}
-        <BorrowDigits borrowDigits={data.borrow_digits} fadeInStyle={fadeInStyle} />
+        <EmptySpace />
+        <BorrowDigits borrowDigits={borrow_digits} fadeInStyle={fadeInStyle} />
         <EmptySpace />
         <EmptySpace />
-        <AnimatedNumber number={data.numbers[0]} animationStep={animationStep} highlightStyle={highlightStyle} />
+        <AnimatedNumber number={numbers[0]} animationStep={animationStep} highlightStyle={highlightStyle} />
         <Typography variant="h5" component="span">-</Typography>
-        <AnimatedNumber number={data.numbers[1]} animationStep={animationStep} highlightStyle={highlightStyle} />
+        <AnimatedNumber number={numbers[1]} animationStep={animationStep} highlightStyle={highlightStyle} />
         <EmptySpace />
-        <ResultDigits result={data.result} fadeInStyle={fadeInStyle} />
+        <ResultDigits result={result} fadeInStyle={fadeInStyle} />
     </Box>
 );
 
 const ProcessStep = ({ children }) => <ListItem>{children}</ListItem>
 
 const SubtractionProcess = ({ content, data }) => {
+
+    const { numbers, borrow_digits, result} = data;
+
     const [animationStep, setAnimationStep] = useState(0);
-    const contentJson = JSON.parse(content);
     const theme = useTheme();
     const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
 
@@ -138,15 +140,15 @@ const SubtractionProcess = ({ content, data }) => {
 
     return (
         <Box my={2} display="flex" flexDirection={isSmallScreen ? "column" : "row-reverse"} justifyContent="space-between">
-            <AnimatedSubtraction data={data} fadeInStyle={fadeIn} highlightStyle={highlight} animationStep={animationStep} />
+            <AnimatedSubtraction numbers={numbers} borrow_digits={borrow_digits} result={result} fadeInStyle={fadeIn} highlightStyle={highlight} animationStep={animationStep} />
             <ProcessContainer>
                 <List>
-                    {contentJson.ejemplo.pasos.map((step, index) => (
+                    {content.map((step, index) => (
                         <React.Fragment key={index}>
                             <ProcessStep>
                                 <Typography>{step}</Typography>
                             </ProcessStep>
-                            {index !== contentJson.ejemplo.pasos.length - 1 && <Divider />}
+                            {index !== content.length - 1 && <Divider />}
                         </React.Fragment>
                     ))}
                 </List>

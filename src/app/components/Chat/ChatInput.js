@@ -4,11 +4,11 @@ import { useChat } from '../../contexts/ChatContext';
 
 const ChatInput = () => {
   const [message, setMessage] = useState('');
-  const { addMessageGeneric } = useChat();
+  const { addMessage } = useChat();
   
   const handleSubmit = () => {
     if (message.trim()) {  
-      addMessageGeneric(message, 'user');  
+      addMessage(message, 'user');  
       setMessage('');  
     }
   };

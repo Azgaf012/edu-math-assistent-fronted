@@ -10,6 +10,7 @@ import TopicSelection from './TopicSelection';
 import parse from 'html-react-parser';
 import NumberComparisonProcess from './AnimatedResponse/ComparacionNumeros';
 import NumberStepsVisualization from './AnimatedResponse/AnteriorPosterior';
+import ResponseContent from '../../../core/entities/ResponseContent';
 
 const ChatWindow = ({ messages = [] }) => {
 
@@ -43,7 +44,7 @@ const ChatWindow = ({ messages = [] }) => {
       position="relative"
     >
       <Box
-        flex={selectedTopic ? '1' : '4'} // Esto permite que el Box se ajuste según el contenido
+        flex={selectedTopic ? '2' : '4'} // Esto permite que el Box se ajuste según el contenido
         width={isSmallScreen ? '100%' : '50%'} // Ajusta el ancho al 100% en pantallas pequeñas
         bgcolor="#FFEBEE"
         p={2}
@@ -56,7 +57,7 @@ const ChatWindow = ({ messages = [] }) => {
       </Box>
 
       <Box
-        flex={selectedTopic ? 3 : 0}
+        flex={selectedTopic ? 4 : 0}
         bgcolor="#E0F2F1"
         p={4}
         overflow="auto"
@@ -66,47 +67,57 @@ const ChatWindow = ({ messages = [] }) => {
         display={selectedTopic || isSmallScreen ? 'block' : 'none'} // Ocultar este Box si no hay un tema seleccionado en pantallas grandes
       >
         {messages.map((message, index) => {
+          const { responseMessage, sender, content } = message;
+          let textToSpeak= content;
+          if(sender === 'assistant'){
+            const { content, data, type } = responseMessage;
+          
+            const answerContent = new ResponseContent(content, data, type);
+            
+            if (answerContent.type === 'sumaLlevando') {
+              console.log(answerContent);
+              return (
+                <Explicacion key={index} content={answerContent.content} >
+                  <SumProcess content={answerContent.content.ejemplo.pasos} data={answerContent.data} />
+                </Explicacion>
+              );
+            }
 
-          if (message.content?.response?.type === 'sumaLlevando') {
-            return (
-              <Explicacion key={index} content={message.content.response.content} >
-                <SumProcess content={message.content.response.content} data={message.content.response.data} />
-              </Explicacion>
-            );
+            if (answerContent.type === 'restaPrestando') {
+              return (
+                <Explicacion key={index} content={answerContent.content}>
+                  <SubtractionProcess content={answerContent.content.ejemplo.pasos} data={answerContent.data} />
+                </Explicacion>
+              );
+            }
+
+            if (answerContent.type === 'comparacionNumeros') {
+              return (
+                <Explicacion key={index} content={answerContent.content}>
+                  <NumberComparisonProcess content={answerContent.content.ejemplo.pasos} data={answerContent.data} />
+                </Explicacion>
+              );
+            }
+
+            if (answerContent.type === 'anteriorPosterior') {
+              return (
+                <Explicacion key={index} content={answerContent.content}>
+                  <NumberStepsVisualization content={answerContent.content.ejemplo.pasos} data={answerContent.data} />
+                </Explicacion>
+              );
+            }
+            textToSpeak = answerContent.saludo + " " + answerContent.tema;
           }
-
-          if (message.content?.response?.type === 'restaPrestando') {
-            return (
-              <Explicacion key={index} content={message.content.response.content}>
-                <SubtractionProcess content={message.content.response.content} data={message.content.response.data} />
-              </Explicacion>
-            );
-          }
-
-          if (message.content?.response?.type === 'comparacionNumeros') {
-            return (
-              <Explicacion key={index} content={message.content.response.content}>
-                <NumberComparisonProcess content={message.content.response.content} data={message.content.response.data} />
-              </Explicacion>
-            );
-          }
-
-          if (message.content?.response?.type === 'anteriorPosterior') {
-            return (
-              <Explicacion key={index} content={message.content.response.content}>
-                <NumberStepsVisualization content={message.content.response.content} data={message.content.response.data} />
-              </Explicacion>
-            );
-          }
-
-          const alignment = message.sender === 'user' ? 'flex-start' : 'flex-end';
+          
+          const alignment = sender === 'user' ? 'flex-start' : 'flex-end';
+           
 
           return (
             <Box key={index} display="flex" justifyContent={alignment} marginBottom={2} >
               <Paper elevation={3} style={{ padding: '1rem', maxWidth: '70%' }}>
-                <Typography variant="body1">{parse(message.content)}</Typography>
+                <Typography variant="body1">{parse(textToSpeak)}</Typography>
               </Paper>
-              <IconButton onClick={() => speak(message.content)}>
+              <IconButton onClick={() => speak(textToSpeak)}>
                 <VolumeUp />
               </IconButton>
             </Box>
