@@ -1,8 +1,7 @@
 import React from 'react';
-import { Typography, Box, Paper, Divider } from '@mui/material';
+import { Typography, Box, Paper } from '@mui/material';
 
 const SequenceDisplay = ({ sequence, step }) => {
-  const nextNumber = sequence[sequence.length - 1] + step; // Calcula el próximo número basado en el paso
 
   return (
     <Box sx={{ display: 'flex', alignItems: 'center', p: 1 }}>
