@@ -11,6 +11,8 @@ import parse from 'html-react-parser';
 import NumberComparisonProcess from './AnimatedResponse/ComparacionNumeros';
 import NumberStepsVisualization from './AnimatedResponse/AnteriorPosterior';
 import ResponseContent from '../../../core/entities/ResponseContent';
+import FunNumberDecomposition from './AnimatedResponse/DescomposicionNumeros';
+import NumberPatternsComponent from './AnimatedResponse/PatronesNumericos';
 
 const ChatWindow = ({ messages = [] }) => {
 
@@ -25,33 +27,33 @@ const ChatWindow = ({ messages = [] }) => {
 
   const speak = (text) => {
     if (speakingRef.current) {
-      window.speechSynthesis.cancel();  // Esto detendrá cualquier habla en curso
-      speakingRef.current = false;  // Restablecer la referencia
+      window.speechSynthesis.cancel();
+      speakingRef.current = false;
     } else {
       const utterance = new SpeechSynthesisUtterance(text);
       window.speechSynthesis.speak(utterance);
-      speakingRef.current = true;  // Indicar que la síntesis de voz está en curso
+      speakingRef.current = true;
     }
   };
 
   return (
     <Box
       display="flex"
-      flexDirection={isSmallScreen ? 'column' : 'row'} // Ajuste de dirección basado en el tamaño de pantalla
+      flexDirection={isSmallScreen ? 'column' : 'row'}
       width="100%"
       height="90vh"
       p={0}
       position="relative"
     >
       <Box
-        flex={selectedTopic ? '2' : '4'} // Esto permite que el Box se ajuste según el contenido
-        width={isSmallScreen ? '100%' : '50%'} // Ajusta el ancho al 100% en pantallas pequeñas
+        flex={selectedTopic ? '2' : '4'}
+        width={isSmallScreen ? '100%' : '50%'}
         bgcolor="#FFEBEE"
         p={2}
         overflow="auto"
         position="relative"
         transition="flex 0.5s ease-in-out"
-        order={isSmallScreen && selectedTopic ? 2 : 1} // Ajuste del orden en pantallas pequeñas
+        order={isSmallScreen && selectedTopic ? 2 : 1}
       >
         <TopicSelection onTopicSelect={handleTopicSelection} isTopicSelected={!!selectedTopic} />
       </Box>
@@ -63,8 +65,8 @@ const ChatWindow = ({ messages = [] }) => {
         overflow="auto"
         position="relative"
         transition="flex 0.5s ease-in-out"
-        order={isSmallScreen ? 1 : 2} // Ajuste del orden para que el contenido se muestre primero en pantallas pequeñas
-        display={selectedTopic || isSmallScreen ? 'block' : 'none'} // Ocultar este Box si no hay un tema seleccionado en pantallas grandes
+        order={isSmallScreen ? 1 : 2} 
+        display={selectedTopic || isSmallScreen ? 'block' : 'none'} 
       >
         {messages.map((message, index) => {
           const { responseMessage, sender, content } = message;
@@ -106,6 +108,32 @@ const ChatWindow = ({ messages = [] }) => {
                 </Explicacion>
               );
             }
+
+
+            if (answerContent.type === 'descomposicionNumeros') {
+              return (
+                <Box key={index} sx={{ my: 2 }}>
+                  <Explicacion content={answerContent.content}>
+                    <FunNumberDecomposition 
+                      hundreds={answerContent.data.hundreds} 
+                      tens={answerContent.data.tens} 
+                      ones={answerContent.data.ones} 
+                      steps={answerContent.content.ejemplo.pasos}
+                    />
+                  </Explicacion>
+                </Box>
+              );
+            }
+
+            if (answerContent.type === 'patronesNumericos') {
+              return (
+                <Explicacion key={index} content={answerContent.content}>
+                  <NumberPatternsComponent content={answerContent.content.ejemplo.pasos} data={answerContent.data} />
+                </Explicacion>
+              );
+            }
+            
+
             textToSpeak = answerContent.saludo + " " + answerContent.tema;
           }
           

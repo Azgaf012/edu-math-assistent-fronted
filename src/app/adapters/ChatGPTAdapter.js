@@ -3,8 +3,8 @@ import ChatAdapter from "../../core/interfaces/ChatAdapter";
 class ChatGPTAdapter extends ChatAdapter {
   async fetchResponse(messageContent) {
     try {
-      const response = await fetch('https://asistente-backend.df.r.appspot.com/questions-with-example', {
-      //const response = await fetch('http://localhost:5000/questions-with-example', {
+      //const response = await fetch('https://asistente-backend.df.r.appspot.com/questions-with-example', {
+      const response = await fetch('http://localhost:5000/questions-with-example', {
         method: 'POST',
         credentials: 'include',
         headers: {

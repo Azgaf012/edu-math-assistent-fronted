@@ -16,7 +16,12 @@ export default class ResponseContent {
             carry_digits: data?.carry_digits,
             borrow_digits: data?.borrow_digits,
             numbers: data?.numbers,
-            result: data?.result
+            result: data?.result,
+            hundreds: data?.hundreds,
+            tens: data?.tens,
+            ones: data?.ones,
+            sequence: data?.sequence,
+            step: data?.step
         };
         this.type = type;
     }

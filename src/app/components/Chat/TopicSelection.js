@@ -86,6 +86,28 @@ const TopicSelection = ({ onTopicSelect, isTopicSelected  }) => {
         >
           Anterior y posterior
         </Button>
+
+        <Button
+          variant="contained"
+          color="secondary"
+          size="large"
+          startIcon={<IndeterminateCheckBoxIcon />}
+          onClick={() => handleButtonClick('Descomposicion de numeros')}
+          fullWidth={fullWidthButton} 
+        >
+          Descomposicion de numeros
+        </Button>
+
+        <Button
+          variant="contained"
+          color="secondary"
+          size="large"
+          startIcon={<IndeterminateCheckBoxIcon />}
+          onClick={() => handleButtonClick('Patrones numericos')}
+          fullWidth={fullWidthButton} 
+        >
+          Patrones numericos
+        </Button>
       </Box>
     </Box>
   );
