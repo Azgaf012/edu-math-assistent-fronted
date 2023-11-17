@@ -13,7 +13,7 @@ export const ChatProvider = ({ children }) => {
   const addMessage = async(content, sender) => {
     setMessages([]);
     const newMessage = { content, sender };
-  
+    setMessages(prevMessages => [...prevMessages, newMessage]);
     if (sender === 'user') {
       setIsLoading(true);
       const apiResponse = await chatAdapter.fetchResponse(content);
@@ -30,10 +30,6 @@ export const ChatProvider = ({ children }) => {
         setMessages(prevMessages => [...prevMessages, apiResponse, newMessage]):
         setMessages(prevMessages => [...prevMessages, responseMessage, newMessage]);
         
-       
-    } else {
-      console.log('hola')
-      setMessages(prevMessages => [...prevMessages, newMessage]);
     }
   };
 
