@@ -2,10 +2,8 @@ export default class ResponseContent {
     constructor(content, data, type) {
         this.content={
             saludo: content.saludo,
-            tema: content.tema,
-            conclusion: content.conclusion,
-            ejemplo: content.ejemplo,
-            sugerenciaPractica: content.sugerencia_practica
+            audio: content.audio,
+            ejemplo: content.ejemplo
         }
         this.data = {
             nextNum: data?.next_num,

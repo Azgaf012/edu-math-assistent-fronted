@@ -52,11 +52,16 @@ const ChatWindow = ({ messages = [] }) => {
             const { content, data, type } = responseMessage;
           
             const answerContent = new ResponseContent(content, data, type);
+
+            textToSpeak = answerContent.content.audio;
             
             if (answerContent.type === 'sumaLlevando') {
-              console.log(answerContent);
               return (
+                
                 <Explicacion key={index} content={answerContent.content} >
+                  <IconButton onClick={() => speak(textToSpeak)}>
+                    <VolumeUp />
+                  </IconButton>
                   <SumProcess content={answerContent.content.ejemplo.pasos} data={answerContent.data} />
                 </Explicacion>
               );
@@ -81,6 +86,9 @@ const ChatWindow = ({ messages = [] }) => {
             if (answerContent.type === 'anteriorPosterior') {
               return (
                 <Explicacion key={index} content={answerContent.content}>
+                  <IconButton onClick={() => speak(textToSpeak)}>
+                    <VolumeUp />
+                  </IconButton>
                   <NumberStepsVisualization content={answerContent.content.ejemplo.pasos} data={answerContent.data} />
                 </Explicacion>
               );
@@ -110,7 +118,7 @@ const ChatWindow = ({ messages = [] }) => {
             }
             
 
-            textToSpeak = answerContent.saludo + " " + answerContent.tema;
+            
           }
           
           const alignment = sender === 'user' ? 'flex-start' : 'flex-end';

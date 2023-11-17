@@ -1,5 +1,5 @@
 import React from 'react';
-import { Typography, Box, Paper } from '@mui/material';
+import { Typography, Box, Paper, Divider } from '@mui/material';
 
 const SequenceDisplay = ({ sequence, step }) => {
 
@@ -22,24 +22,26 @@ const SequenceDisplay = ({ sequence, step }) => {
   );
 };
 
-const NumberPatternsSteps = ({ steps }) => {
-  return (
-    <Box sx={{ width: '100%', bgcolor: 'background.paper', overflow: 'auto' }}>
-      {steps.map((step, index) => (
-        <Box key={index} sx={{ my: 1 }}>
-          <Typography variant="body1">{step}</Typography>
-        </Box>
-      ))}
-    </Box>
-  );
+const commonStyles = {
+  padding: '8px',
+  margin: '8px',
+  borderRadius: '4px',
+  textAlign: 'center',
 };
 
 const NumberPatternsComponent = ({ content, data }) => {
   return (
     <Box sx={{ display: 'flex', flexDirection: 'row', alignItems: 'flex-start', width: '100%', p: 2 }}>
-      <Box sx={{ width: '40%' }}>
-        <Typography variant="h6" sx={{ mb: 2 }}>Pasos para encontrar el patrón:</Typography>
-        <NumberPatternsSteps steps={content} />
+      <Box sx={{ width: '40%', ...commonStyles, border: '1px solid #FF69B4', bgcolor: '#FFF0F5' }}>
+        <Typography variant="h6" sx={{ mb: 2, color: '#FF69B4' }}>Pasos para encontrar el patrón:</Typography>
+        <Box sx={{ ...commonStyles }}>
+          {content.map((step, index) => (
+            <React.Fragment key={index}>
+              <Typography variant="body1">{step}</Typography>
+              {index !== content.length - 1 && <Divider />}
+            </React.Fragment>
+          ))}
+        </Box>
       </Box>
       <Box sx={{ width: '60%', overflow: 'auto' }}>
         <Typography variant="h6" sx={{ mb: 2 }}>Secuencia con Patrón:</Typography>
