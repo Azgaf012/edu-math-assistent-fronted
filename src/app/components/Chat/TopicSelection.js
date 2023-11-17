@@ -4,7 +4,6 @@ import AddBoxIcon from '@mui/icons-material/AddBox';
 import IndeterminateCheckBoxIcon from '@mui/icons-material/IndeterminateCheckBox';
 import CompareArrowsIcon from '@mui/icons-material/CompareArrows';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import FilterNoneIcon from '@mui/icons-material/FilterNone';
 import PatternIcon from '@mui/icons-material/Pattern';
 import { useChat } from '../../contexts/ChatContext';
