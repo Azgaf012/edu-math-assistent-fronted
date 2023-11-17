@@ -1,12 +1,11 @@
-import React, { useState, useRef } from 'react';
-import { Paper, Box, Typography, IconButton, useMediaQuery } from '@mui/material';
+import React, { useRef } from 'react';
+import { Paper, Box, Typography, IconButton } from '@mui/material';
 import VolumeUp from '@mui/icons-material/VolumeUp';
 import SubtractionProcess from './AnimatedResponse/RetaPrestando';
 import Explicacion from './AnimatedResponse/Explicacion';
 import SumProcess from './AnimatedResponse/SumaLlevando';
 import { useChat } from '../../contexts/ChatContext';
 import LoadingMessage from '../common/progress';
-import TopicSelection from './TopicSelection';
 import NumberComparisonProcess from './AnimatedResponse/ComparacionNumeros';
 import NumberStepsVisualization from './AnimatedResponse/AnteriorPosterior';
 import ResponseContent from '../../../core/entities/ResponseContent';
@@ -15,14 +14,8 @@ import NumberPatternsComponent from './AnimatedResponse/PatronesNumericos';
 
 const ChatWindow = ({ messages = [] }) => {
 
-  const isSmallScreen = useMediaQuery(`(max-width:1500px)`);
   const { isLoading } = useChat();
-  const [selectedTopic, setSelectedTopic] = useState(null);
   const speakingRef = useRef(false);
-
-  const handleTopicSelection = (topic) => {
-    setSelectedTopic(topic);
-  };
 
   const speak = (text) => {
     if (speakingRef.current) {
@@ -36,36 +29,14 @@ const ChatWindow = ({ messages = [] }) => {
   };
 
   return (
-    <Box
-      display="flex"
-      flexDirection={isSmallScreen ? 'column' : 'row'}
-      width="100%"
-      height="90vh"
-      p={0}
-      position="relative"
-    >
-      <Box
-        flex={selectedTopic ? '2' : '4'}
-        width={isSmallScreen ? '100%' : '50%'}
-        bgcolor="#FFEBEE"
-        p={2}
-        overflow="auto"
-        position="relative"
-        transition="flex 0.5s ease-in-out"
-        order={isSmallScreen && selectedTopic ? 2 : 1}
-      >
-        <TopicSelection onTopicSelect={handleTopicSelection} isTopicSelected={!!selectedTopic} />
-      </Box>
 
       <Box
-        flex={selectedTopic ? 4 : 0}
+        flex={1}
         bgcolor="#E0F2F1"
         p={4}
         overflow="auto"
         position="relative"
-        transition="flex 0.5s ease-in-out"
-        order={isSmallScreen ? 1 : 2} 
-        display={selectedTopic || isSmallScreen ? 'block' : 'none'} 
+        sx={{ height: '90vh' }}
       >
         {messages.map((message, index) => {
           const { responseMessage, sender, content } = message;
@@ -157,7 +128,7 @@ const ChatWindow = ({ messages = [] }) => {
         })}
         {isLoading && <LoadingMessage />}
       </Box>
-    </Box>
+    
   );
 };
 

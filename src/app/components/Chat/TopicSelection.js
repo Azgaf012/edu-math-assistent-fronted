@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Box, useMediaQuery, Typography } from '@mui/material';
+import { Button, Box, Typography } from '@mui/material';
 import AddBoxIcon from '@mui/icons-material/AddBox';
 import IndeterminateCheckBoxIcon from '@mui/icons-material/IndeterminateCheckBox';
 import CompareArrowsIcon from '@mui/icons-material/CompareArrows';
@@ -28,12 +28,6 @@ const StyledButton = styled(Button)(({ color }) => ({
   },
 }));
 
-
-const useIsSmallScreen = () => {
-  return useMediaQuery('(max-width:900px)');
-};
-
-// Lista completa de temas con íconos y colores personalizados
 const topics = [
   { name: 'Sumas Llevando', icon: <AddBoxIcon />, color: '#f06292' },
   { name: 'Restas Prestando', icon: <IndeterminateCheckBoxIcon />, color: '#ba68c8' },
@@ -43,12 +37,11 @@ const topics = [
   { name: 'Patrones Numéricos', icon: <PatternIcon />, color: '#ff8a65' },
 ];
 
-const TopicButton = ({ topic, onTopicSelect, isFullWidth }) => {
+const TopicButton = ({ topic }) => {
   const { addMessage } = useChat();
 
   const handleButtonClick = () => {
     addMessage(topic.name, 'user');
-    onTopicSelect(topic.name);
   };
 
   return (
@@ -57,26 +50,20 @@ const TopicButton = ({ topic, onTopicSelect, isFullWidth }) => {
       size="large"
       startIcon={topic.icon}
       onClick={handleButtonClick}
-      fullWidth={isFullWidth}
-      style={{ backgroundColor: topic.color, color: textColor }} // Estilos directos para el color de fondo y de texto
+      style={{ backgroundColor: topic.color, color: textColor }}
     >
       {topic.name}
     </StyledButton>
   );
 };
 
-
-
-const TopicSelection = ({ onTopicSelect }) => {
-  const isSmallScreen = useIsSmallScreen();
-
+const TopicSelection = () => {
   return (
     <Box
       display="flex"
       flexDirection="column"
       justifyContent="center"
       alignItems="center"
-      height="100%"
       p={2}
     >
       <Typography variant="h2" gutterBottom>
@@ -90,7 +77,7 @@ const TopicSelection = ({ onTopicSelect }) => {
       </Typography>
       <Box
         display="flex"
-        flexDirection={isSmallScreen ? 'column' : 'row'}
+        flexDirection="column"
         justifyContent="center"
         alignItems="stretch"
         width="100%"
@@ -101,8 +88,6 @@ const TopicSelection = ({ onTopicSelect }) => {
           <TopicButton
             key={topic.name}
             topic={topic}
-            onTopicSelect={onTopicSelect}
-            isFullWidth={isSmallScreen}
           />
         ))}
       </Box>

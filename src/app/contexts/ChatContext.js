@@ -18,7 +18,7 @@ export const ChatProvider = ({ children }) => {
       setIsLoading(true);
       const apiResponse = await chatAdapter.fetchResponse(content);
       setIsLoading(false);
-      console.log(apiResponse);
+      
       const responseMessage = new ChatMessage(
           'assistant',
           apiResponse.response,
@@ -32,6 +32,7 @@ export const ChatProvider = ({ children }) => {
         
        
     } else {
+      console.log('hola')
       setMessages(prevMessages => [...prevMessages, newMessage]);
     }
   };
