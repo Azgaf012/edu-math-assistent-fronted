@@ -1,21 +1,75 @@
 import React from 'react';
-import { Button, Box, Typography, useMediaQuery } from '@mui/material';
+import { Button, Box, useMediaQuery, Typography } from '@mui/material';
 import AddBoxIcon from '@mui/icons-material/AddBox';
 import IndeterminateCheckBoxIcon from '@mui/icons-material/IndeterminateCheckBox';
+import CompareArrowsIcon from '@mui/icons-material/CompareArrows';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
+import FilterNoneIcon from '@mui/icons-material/FilterNone';
+import PatternIcon from '@mui/icons-material/Pattern';
 import { useChat } from '../../contexts/ChatContext';
+import { styled } from '@mui/system';
 
-const TopicSelection = ({ onTopicSelect, isTopicSelected  }) => {
-  const isSmallScreen = useMediaQuery(`(max-width:900px)`); // Usar directamente la query con px
-  
+// Colores de texto para contraste
+const textColor = '#ffffff';
+
+const StyledButton = styled(Button)(({ color }) => ({
+  padding: '10px 20px',
+  fontSize: '16px',
+  fontWeight: 'bold',
+  textTransform: 'none',
+  borderRadius: '20px',
+  margin: '8px',
+  color: textColor,
+  backgroundColor: color, // Usa el color proporcionado
+  '&:hover': {
+    // Aumenta la oscuridad del color al pasar el mouse
+    backgroundColor: color, // Aquí podrías oscurecer el color al pasar el mouse
+    boxShadow: '0 4px 12px 0 rgba(0,0,0,0.2)',
+  },
+}));
+
+
+const useIsSmallScreen = () => {
+  return useMediaQuery('(max-width:900px)');
+};
+
+// Lista completa de temas con íconos y colores personalizados
+const topics = [
+  { name: 'Sumas Llevando', icon: <AddBoxIcon />, color: '#f06292' },
+  { name: 'Restas Prestando', icon: <IndeterminateCheckBoxIcon />, color: '#ba68c8' },
+  { name: 'Comparación de Números', icon: <CompareArrowsIcon />, color: '#64b5f6' },
+  { name: 'Anterior y Posterior', icon: <ArrowBackIcon />, color: '#4db6ac' },
+  { name: 'Descomposición de Números', icon: <FilterNoneIcon />, color: '#ffa500' },
+  { name: 'Patrones Numéricos', icon: <PatternIcon />, color: '#ff8a65' },
+];
+
+const TopicButton = ({ topic, onTopicSelect, isFullWidth }) => {
   const { addMessage } = useChat();
 
-  const handleButtonClick = (topic) => {
-    addMessage(topic, 'user');
-    onTopicSelect(topic);
+  const handleButtonClick = () => {
+    addMessage(topic.name, 'user');
+    onTopicSelect(topic.name);
   };
 
-  const flexDirection = isSmallScreen || isTopicSelected ? 'column' : 'row';
-  const fullWidthButton = isSmallScreen || isTopicSelected;
+  return (
+    <StyledButton
+      variant="contained"
+      size="large"
+      startIcon={topic.icon}
+      onClick={handleButtonClick}
+      fullWidth={isFullWidth}
+      style={{ backgroundColor: topic.color, color: textColor }} // Estilos directos para el color de fondo y de texto
+    >
+      {topic.name}
+    </StyledButton>
+  );
+};
+
+
+
+const TopicSelection = ({ onTopicSelect }) => {
+  const isSmallScreen = useIsSmallScreen();
 
   return (
     <Box
@@ -37,77 +91,21 @@ const TopicSelection = ({ onTopicSelect, isTopicSelected  }) => {
       </Typography>
       <Box
         display="flex"
-        flexDirection={flexDirection}
+        flexDirection={isSmallScreen ? 'column' : 'row'}
         justifyContent="center"
         alignItems="stretch"
         width="100%"
         mt={2}
         gap={2}
       >
-        <Button
-          variant="contained"
-          color="primary"
-          size="large"
-          startIcon={<AddBoxIcon />}
-          onClick={() => handleButtonClick('Sumas Llevando')}
-          fullWidth={fullWidthButton}
-        >
-          Sumas Llevando
-        </Button>
-        <Button
-          variant="contained"
-          color="secondary"
-          size="large"
-          startIcon={<IndeterminateCheckBoxIcon />}
-          onClick={() => handleButtonClick('Restas Prestando')}
-          fullWidth={fullWidthButton}  
-        >
-          Restas Prestando
-        </Button>
-
-        <Button
-          variant="contained"
-          color="secondary"
-          size="large"
-          startIcon={<IndeterminateCheckBoxIcon />}
-          onClick={() => handleButtonClick('Comparacion de numeros')}
-          fullWidth={fullWidthButton} 
-        >
-          Comparaci&oacute;n de n&uacute;meros
-        </Button>
-
-        <Button
-          variant="contained"
-          color="secondary"
-          size="large"
-          startIcon={<IndeterminateCheckBoxIcon />}
-          onClick={() => handleButtonClick('Posterior y anterior')}
-          fullWidth={fullWidthButton} 
-        >
-          Anterior y posterior
-        </Button>
-
-        <Button
-          variant="contained"
-          color="secondary"
-          size="large"
-          startIcon={<IndeterminateCheckBoxIcon />}
-          onClick={() => handleButtonClick('Descomposicion de numeros')}
-          fullWidth={fullWidthButton} 
-        >
-          Descomposicion de numeros
-        </Button>
-
-        <Button
-          variant="contained"
-          color="secondary"
-          size="large"
-          startIcon={<IndeterminateCheckBoxIcon />}
-          onClick={() => handleButtonClick('Patrones numericos')}
-          fullWidth={fullWidthButton} 
-        >
-          Patrones numericos
-        </Button>
+        {topics.map((topic) => (
+          <TopicButton
+            key={topic.name}
+            topic={topic}
+            onTopicSelect={onTopicSelect}
+            isFullWidth={isSmallScreen}
+          />
+        ))}
       </Box>
     </Box>
   );

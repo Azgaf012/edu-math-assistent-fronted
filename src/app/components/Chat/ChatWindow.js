@@ -70,8 +70,15 @@ const ChatWindow = ({ messages = [] }) => {
       >
         {messages.map((message, index) => {
           const { responseMessage, sender, content } = message;
+
           let textToSpeak= content;
-          if(sender === 'assistant'){
+          if(content === undefined){
+
+            textToSpeak = message;
+          } 
+          
+          if(sender === 'assistant' && typeof responseMessage === 'object' && responseMessage !== null){
+          
             const { content, data, type } = responseMessage;
           
             const answerContent = new ResponseContent(content, data, type);
@@ -109,7 +116,6 @@ const ChatWindow = ({ messages = [] }) => {
               );
             }
 
-
             if (answerContent.type === 'descomposicionNumeros') {
               return (
                 <Box key={index} sx={{ my: 2 }}>
@@ -138,12 +144,11 @@ const ChatWindow = ({ messages = [] }) => {
           }
           
           const alignment = sender === 'user' ? 'flex-start' : 'flex-end';
-           
 
           return (
             <Box key={index} display="flex" justifyContent={alignment} marginBottom={2} >
               <Paper elevation={3} style={{ padding: '1rem', maxWidth: '70%' }}>
-                <Typography variant="body1">{parse(textToSpeak)}</Typography>
+                <Typography variant="body1">{textToSpeak}</Typography>
               </Paper>
               <IconButton onClick={() => speak(textToSpeak)}>
                 <VolumeUp />

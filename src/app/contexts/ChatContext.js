@@ -24,30 +24,20 @@ export const ChatProvider = ({ children }) => {
           apiResponse.response,
           new Date().toISOString()
       );
-      setMessages(prevMessages => [...prevMessages, responseMessage, newMessage]);
-    } else {
-      setMessages(prevMessages => [...prevMessages, newMessage]);
-    }
-  };
 
-  const addMessageGeneric = async(content, sender) => {
-    setMessages([]);
-    const newMessage = { content, sender };
-  
-    if (sender === 'user') {
-      setIsLoading(true); 
-      const responseContent = await chatAdapter.fetchResponseGeneric(content);
-      setIsLoading(false);
-      
-      const responseMessage = { content: responseContent, sender: 'assistant' };
-      setMessages(prevMessages => [...prevMessages, newMessage, responseMessage]);
+      //validar si apiResponse es un json o un string
+        (apiResponse.response === undefined)?
+        setMessages(prevMessages => [...prevMessages, apiResponse, newMessage]):
+        setMessages(prevMessages => [...prevMessages, responseMessage, newMessage]);
+        
+       
     } else {
       setMessages(prevMessages => [...prevMessages, newMessage]);
     }
   };
 
   return (
-    <ChatContext.Provider value={{ messages, addMessageGeneric, addMessage, isLoading }}>
+    <ChatContext.Provider value={{ messages, addMessage, isLoading }}>
       {children}
     </ChatContext.Provider>
   );
