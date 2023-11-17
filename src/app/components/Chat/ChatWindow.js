@@ -7,7 +7,6 @@ import SumProcess from './AnimatedResponse/SumaLlevando';
 import { useChat } from '../../contexts/ChatContext';
 import LoadingMessage from '../common/progress';
 import TopicSelection from './TopicSelection';
-import parse from 'html-react-parser';
 import NumberComparisonProcess from './AnimatedResponse/ComparacionNumeros';
 import NumberStepsVisualization from './AnimatedResponse/AnteriorPosterior';
 import ResponseContent from '../../../core/entities/ResponseContent';
