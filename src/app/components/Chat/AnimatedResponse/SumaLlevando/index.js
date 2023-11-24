@@ -35,7 +35,7 @@ const CarryOver = (props) => (
 
 const CarryOverDigits = ({ carryOverDigits }) => (
   <>
-    {Array(2 - carryOverDigits.length)
+    {Array(3 - carryOverDigits.length)
       .fill()
       .map((_, index) => (
         <EmptySpace key={"empty-carry-" + index}></EmptySpace>
@@ -54,15 +54,16 @@ const CarryOverDigits = ({ carryOverDigits }) => (
   </>
 );
 
-const AnimatedNumber = ({ number}) => (
+
+const AnimatedNumber = ({ number }) => (
   <>
-    {Array(3 - number.toString().length)
+    {Array(4 - number.toString().length)
       .fill()
       .map((_, index) => (
         <EmptySpace key={"empty-" + index}></EmptySpace>
       ))}
     {number.toString().split("").map((digit, index) => (
-      <animated.div key={index} >
+      <animated.div key={index}>
         <Number>
           <Typography variant="span">{digit}</Typography>
         </Number>
@@ -73,7 +74,7 @@ const AnimatedNumber = ({ number}) => (
 
 const ResultDigits = ({ result }) => (
   <>
-    {Array(3 - result.toString().length)
+    {Array(4 - result.toString().length)
       .fill()
       .map((_, index) => (
         <EmptySpace key={"empty-result-" + index}></EmptySpace>
@@ -88,23 +89,27 @@ const ResultDigits = ({ result }) => (
   </>
 );
 
-const AnimatedSum = ({numbers, carry_digits, result}) => {
-
-
+const AnimatedSum = ({ numbers, carry_digits, result }) => {
   return (
-    <Box sx={{ width: "50%", display: "grid", gridTemplateColumns: "repeat(3, 1fr) auto", gap: 2, fontSize: "15px", border: 1, borderColor: "#FF69B4", borderRadius: 1, p: 4 }}>
-      <Typography variant="span" sx={{ gridColumn: "1", textAlign: "center" }}>C</Typography>
-      <Typography variant="span" sx={{ gridColumn: "2", textAlign: "center" }}>D</Typography>
-      <Typography variant="span" sx={{ gridColumn: "3", textAlign: "center" }}>U</Typography>
-      <EmptySpace />  {/* Esto ocupará la 4ta columna */}
-      <CarryOverDigits carryOverDigits={carry_digits}/>
+    <Box sx={{ width: "50%", display: "grid", gridTemplateColumns: "repeat(4, 1fr) auto", gap: 2, fontSize: "15px", border: 1, borderColor: "#FF69B4", borderRadius: 1, p: 4 }}>
+      <Typography variant="span" sx={{ gridColumn: "1 / span 1", textAlign: "center" }}>M</Typography>
+      <Typography variant="span" sx={{ gridColumn: "2 / span 1", textAlign: "center" }}>C</Typography>
+      <Typography variant="span" sx={{ gridColumn: "3 / span 1", textAlign: "center" }}>D</Typography>
+      <Typography variant="span" sx={{ gridColumn: "4 / span 1", textAlign: "center" }}>U</Typography>
+      <EmptySpace />  {/* Esto ocupará la columna adicional para el signo más */}
+      <CarryOverDigits carryOverDigits={carry_digits} />
       <EmptySpace />
       <EmptySpace />
-      <AnimatedNumber number={numbers[0]} />
-      <Typography variant="h5" component="span">+</Typography>
-      <AnimatedNumber number={numbers[1]} />
-      <EmptySpace />
-      <ResultDigits result={result} f />
+      {numbers.map((number, index) => (
+        <React.Fragment key={index}>
+          {index > 0 && ( // Solo agregar el signo más antes del segundo número
+            <Typography variant="h5" component="span" sx={{ gridColumn: "5 / span 1", alignSelf: "center" }}>+</Typography>
+          )}
+          <AnimatedNumber number={number} />
+        </React.Fragment>
+      ))}
+      <EmptySpace />  {/* Espacio antes del resultado */}
+      <ResultDigits result={result} />
     </Box>
   );
 };
