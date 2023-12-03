@@ -70,7 +70,7 @@ const TopicSelection = () => {
         Smart Tutor
       </Typography>
       <Typography variant="h5" gutterBottom color="textSecondary">
-        ¡Descubre lo divertido que son las matemáticas!
+        ¡Descubre lo divertido que son las matemáticas!!
       </Typography>
       <Typography variant="subtitle1" gutterBottom textAlign="center" mb={4}>
         Explora, aprende y diviértete con las sumas y restas. Escoge un tema y comienza tu aventura matemática.
